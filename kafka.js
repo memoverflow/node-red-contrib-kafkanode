@@ -58,7 +58,7 @@ module.exports = function (RED) {
         var node = this;
 
         var kafka = require('kafka-node');
-        var HighLevelConsumer = kafka.HighLevelConsumer;
+        var Consumer = kafka.Consumer;
         var Client = kafka.KafkaClient;
         var topic = config.topic;
         var brokerUrl = config.brokerUrl;
@@ -76,7 +76,7 @@ module.exports = function (RED) {
         };
 
         try {
-            var consumer = new HighLevelConsumer(client, topics, options);
+            var consumer = new Consumer(client, topics, options);
             node.log("Consumer created...");
             node.status({ fill: "green", shape: "dot", text: "connected to " + brokerUrl });
 
