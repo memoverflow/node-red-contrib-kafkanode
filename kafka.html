@@ -1,0 +1,94 @@
+<script type="text/javascript">
+    RED.nodes.registerType('kafka', {
+        category: 'output',
+        color: '#FFFFFF',
+        defaults: {
+            brokerUrl: { value: "", required: true },
+            topic: { value: "", required: true },
+            debug: { value: "" }
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: "kafka.png",
+        align: "right",
+        label: function () {
+            return this.name || "kafka";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="kafka">
+    <div class="form-row">
+        <label for="node-input-brokerUrl"><i class="icon-tag"></i>Broker Url</label>
+        <input type="text" id="node-input-brokerUrl" placeholder="localhost:9092">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-topic"><i class="icon-tag"></i>Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug"><i class="icon-tag"></i>Debug</label>
+        <input type="checkbox" id="node-input-debug" style="display: inline-block; width: auto; vertical-align: top;" value="debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="kafka">
+    <p>A simple Kafka producer node.</p>
+    <p><b>brokerUrl</b>  <i>The Broker url of Kafka.</i></p>
+    <p><b>Topic</b> <i>The topic of message to produce.</i></p>
+    <p>Check <b>Debug</b> <i> to print extra information to console.</i></p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('kafka in', {
+        category: 'input',
+        color: '#FFFFFF',
+        defaults: {
+            brokerUrl: { value: "", required: true },
+            topic: { value: "", required: true },
+            groupId: { value: "", required: true },
+            debug: { value: "" },
+            autoCommit: { value: true, required: true },
+            fetchMaxBytes: { value: 1024 * 1024 },
+            sessionTimeout: { value: '' },
+            delayConsumerCreation: { value: true, required: true },
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: "kafka.png",
+        label: function () {
+            return this.name || "kafka";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="kafka in">
+    <div class="form-row">
+        <label for="node-input-brokerUrl"><i class="icon-tag"></i>Broker Url</label>
+        <input type="text" id="node-input-brokerUrl" placeholder="localhost:9092">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-topic"><i class="icon-tag"></i>Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+
+      <div class="form-row">
+        <label for="node-input-groupId"><i class="icon-tag"></i>GroupId</label>
+        <input type="text" id="node-input-groupId" placeholder="GroupId">
+    </div>
+    <div class="form-row">
+        <label for="node-input-debug"><i class="icon-tag"></i>Debug</label>
+        <input type="checkbox" id="node-input-debug" style="display: inline-block; width: auto; vertical-align: top;" value="debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="kafka in">
+    <p>A simple Kafka consumer node.</p>
+    <p><b>Broker Url</b>  <i>The Broker Url of Kafka.</i></p>
+    <p><b>GroupId</b> <i>The groupId of consumers.</i></p>
+    <p><b>Topic</b> <i>The topic of message to produce.</i></p>
+    <p>Check <b>Debug</b> <i> to print extra information to console.</i></p>
+</script>
