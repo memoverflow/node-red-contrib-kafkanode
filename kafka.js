@@ -14,6 +14,7 @@ module.exports = function (RED) {
         var debug = (config.debug == "debug");
         var node = this;
         var kafka = require('kafka-node');
+        var p = 0;
         var HighLevelProducer = kafka.HighLevelProducer;
         var Client = kafka.KafkaClient;
         var client = new Client({ kafkaHost : brokerUrl });
@@ -21,7 +22,7 @@ module.exports = function (RED) {
         try {
             this.on("input", function (msg) {
                 var payloads = [];
-                payloads = [{ topic: topic, messages: msg.payload }];
+                payloads = [{ topic: topic, partition: p,  messages: msg.payload }];
                 if (debug) {
                     console.log(msg);
                     node.log(msg);
@@ -63,9 +64,9 @@ module.exports = function (RED) {
         var brokerUrl = config.brokerUrl;
         var groupId = config.groupId;
         var debug = (config.debug == "debug");
-
+        var p = 0;
         var client = new Client({ kafkaHost: brokerUrl });
-
+        var topics = [{ topic: topic, partition: 0}];
         var options = {
             groupId: groupId,
             autoCommitMsgCount: 10,
@@ -74,30 +75,28 @@ module.exports = function (RED) {
             fetchMaxBytes: 1024 * 1024 
         };
 
-        var createConsumer = function () {
-            try {
-                var consumer = new HighLevelConsumer(client, topic, options);
-                node.log("Consumer created...");
-                node.status({ fill: "green", shape: "dot", text: "connected to " + brokerUrl });
+        try {
+            var consumer = new HighLevelConsumer(client, topics, options);
+            node.log("Consumer created...");
+            node.status({ fill: "green", shape: "dot", text: "connected to " + brokerUrl });
 
-                consumer.on('message', function (message) {
-                    if (debug) {
-                        console.log(message);
-                        node.log(message);
-                    }
-                    var msg = { payload: message };
-                    node.send(msg);
-                });
+            consumer.on('message', function (message) {
+                if (debug) {
+                    console.log(message);
+                    node.log(message);
+                }
+                var msg = { payload: message };
+                node.send(msg);
+            });
 
-                consumer.on('error', function (err) {
-                    console.error(err);
-                });
-            }
-            catch (e) {
-                node.error(e);
-                return;
-            }
-        };
+            consumer.on('error', function (err) {
+                console.error(err);
+            });
+        }
+        catch (e) {
+            node.error(e);
+            return;
+        }
     }
 
     RED.nodes.registerType("kafka in", kafkaInNode);
