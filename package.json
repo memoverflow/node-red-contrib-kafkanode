@@ -21,7 +21,9 @@
         }
     },
     "author": "Lucas Ren",
-    "dependencies": {},
+    "dependencies": {
+        "kafka-node": "^4.1.1"
+    },
     "devDependencies": {
         "kafka-node": "^4.1.1"
     }
