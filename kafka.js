@@ -22,7 +22,10 @@ module.exports = function (RED) {
             this.on("input", function (msg) {
                 var payloads = [];
                 payloads = [{ topic: topic, messages: msg.payload }];
-
+                if (debug) {
+                    console.log(msg);
+                    node.log(msg);
+                }
                 producer.send(payloads, function (err, data) {
                     if (err) {
                         node.error(err);
