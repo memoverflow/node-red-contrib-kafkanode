@@ -74,7 +74,7 @@ module.exports = function (RED) {
             fetchMaxBytes: 1024 * 1024 
         };
 
-        try {
+        var consumerFunc = function(){
             var consumer = new Consumer(client, topics, options);
             node.log("Consumer created...");
             node.status({ fill: "green", shape: "dot", text: "connected to " + brokerUrl });
@@ -92,9 +92,13 @@ module.exports = function (RED) {
                 console.error(err);
             });
         }
+
+        try {
+            consumerFunc()
+        }
         catch (e) {
             node.error(e);
-            return;
+            consumerFunc()
         }
     }
 
