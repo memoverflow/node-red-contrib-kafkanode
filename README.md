@@ -1,4 +1,4 @@
-PATCHED VERSION OF https://www.npmjs.com/package/node-red-contrib-kafka-node
+PATCHED VERSION OF https://www.npmjs.com/package/node-red-contrib-kafka-node-latest
 
 # Kafka Node
 Kafka node can produce/consume the mesasges to/from kafka cluster along with topic on [NodeRED](http://nodered.org).
