@@ -30,6 +30,11 @@
     </div>
 
     <div class="form-row">
+        <label for="node-input-partition"><i class="icon-tag"></i>Partition</label>
+        <input type="text" id="node-input-partition" placeholder="0">
+    </div>
+
+    <div class="form-row">
         <label for="node-input-debug"><i class="icon-tag"></i>Debug</label>
         <input type="checkbox" id="node-input-debug" style="display: inline-block; width: auto; vertical-align: top;" value="debug">
     </div>
@@ -39,6 +44,7 @@
     <p>A simple Kafka producer node.</p>
     <p><b>brokerUrl</b>  <i>The Broker url of Kafka.</i></p>
     <p><b>Topic</b> <i>The topic of message to produce.</i></p>
+    <p><b>Partition</b> <i>The topic partition.</i></p>
     <p>Check <b>Debug</b> <i> to print extra information to console.</i></p>
 </script>
 
@@ -77,7 +83,12 @@
         <input type="text" id="node-input-topic" placeholder="Topic">
     </div>
 
-      <div class="form-row">
+    <div class="form-row">
+        <label for="node-input-partition"><i class="icon-tag"></i>Partition</label>
+        <input type="text" id="node-input-partition" placeholder="0">
+    </div>
+
+    <div class="form-row">
         <label for="node-input-groupId"><i class="icon-tag"></i>GroupId</label>
         <input type="text" id="node-input-groupId" placeholder="GroupId">
     </div>
@@ -92,5 +103,6 @@
     <p><b>Broker Url</b>  <i>The Broker Url of Kafka.</i></p>
     <p><b>GroupId</b> <i>The groupId of consumers.</i></p>
     <p><b>Topic</b> <i>The topic of message to produce.</i></p>
+    <p><b>Partition</b> <i>The topic partition.</i></p>
     <p>Check <b>Debug</b> <i> to print extra information to console.</i></p>
 </script>
