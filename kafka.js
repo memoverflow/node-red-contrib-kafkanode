@@ -1,5 +1,7 @@
 /**
  * Created by fwang1 on 3/25/15.
+ * Updated by LucasRen on 7/31/19.
+ * Fix issues.
  */
 module.exports = function (RED) {
     /*
@@ -14,7 +16,7 @@ module.exports = function (RED) {
         var debug = (config.debug == "debug");
         var node = this;
         var kafka = require('kafka-node');
-        var p = 0;
+        var p = config.partition;
         var HighLevelProducer = kafka.HighLevelProducer;
         var Client = kafka.KafkaClient;
         var client = new Client({ kafkaHost : brokerUrl });
@@ -27,10 +29,13 @@ module.exports = function (RED) {
                     if (err) {
                         node.error(err);
                     }else{
-                        console.log(msg);
-                        node.log(msg);
+                        if (debug) {
+                            node.log(msg);
+                        }
                     }
-                    node.log("Message Sent: " + data);
+                    if(debug){
+                        node.log("Message Sent: " + data);
+                    }
                 });
             });
         }
@@ -63,9 +68,9 @@ module.exports = function (RED) {
         var brokerUrl = config.brokerUrl;
         var groupId = config.groupId;
         var debug = (config.debug == "debug");
-        var p = 0;
+        var p = config.partition;
         var client = new Client({ kafkaHost: brokerUrl });
-        var topics = [{ topic: topic, partition: 0}];
+        var topics = [{ topic: topic, partition: p}];
         var options = {
             groupId: groupId,
             autoCommitMsgCount: 10,

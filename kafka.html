@@ -5,6 +5,7 @@
         defaults: {
             brokerUrl: { value: "", required: true },
             topic: { value: "", required: true },
+            partition: { value: "0", required: true },
             debug: { value: "" }
         },
         inputs: 1,
@@ -50,6 +51,7 @@
             topic: { value: "", required: true },
             groupId: { value: "", required: true },
             debug: { value: "" },
+            partition: { value: "0", required: true },
             autoCommit: { value: true, required: true },
             fetchMaxBytes: { value: 1024 * 1024 },
             sessionTimeout: { value: '' },
