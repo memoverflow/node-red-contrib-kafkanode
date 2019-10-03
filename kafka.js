@@ -16,7 +16,7 @@ module.exports = function (RED) {
         var debug = (config.debug == "debug");
         var node = this;
         var kafka = require('kafka-node');
-        var p = config.partition;
+        var p = Number(config.partition);
         var HighLevelProducer = kafka.HighLevelProducer;
         var Client = kafka.KafkaClient;
         var client = new Client({ kafkaHost : brokerUrl });
@@ -68,7 +68,7 @@ module.exports = function (RED) {
         var brokerUrl = config.brokerUrl;
         var groupId = config.groupId;
         var debug = (config.debug == "debug");
-        var p = config.partition;
+        var p = Number(config.partition);
         var client = new Client({ kafkaHost: brokerUrl });
         var topics = [{ topic: topic, partition: p}];
         var options = {
