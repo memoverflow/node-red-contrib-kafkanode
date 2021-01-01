@@ -10,20 +10,34 @@ module.exports = function (RED) {
      - brokerUrl(example: brokerUrl = “[host]:9092")
      */
     function kafkaNode(config) {
+
         RED.nodes.createNode(this, config);
-        var topic = config.topic;
+
+        var node = this;
+
+        var configtopic = config.topic;
+        var useMsgTopic = config.msgtopic;
         var brokerUrl = config.brokerUrl;
         var debug = (config.debug == "debug");
-        var node = this;
+
         var kafka = require('kafka-node');
         var p = Number(config.partition);
         var HighLevelProducer = kafka.HighLevelProducer;
         var Client = kafka.KafkaClient;
         var client = new Client({ kafkaHost : brokerUrl });
         var producer = new HighLevelProducer(client);
+        var topic;
+
         try {
             this.on("input", function (msg) {
                 var payloads = [];
+
+                if (useMsgTopic) {
+                    topic = msg[configtopic];
+                } else {
+                    topic =  configtopic;
+                }
+
                 payloads = [{ topic: topic, partition: p,  messages: msg.payload }];
                 producer.send(payloads, function (err, data) {
                     if (err) {
@@ -42,7 +56,7 @@ module.exports = function (RED) {
         catch (e) {
             node.error(e);
         }
-        
+
         this.status({ fill: "green", shape: "dot", text: "connected to " + brokerUrl });
     }
 
