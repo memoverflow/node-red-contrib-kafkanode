@@ -10,6 +10,7 @@ module.exports = function (RED) {
      - brokerUrl(example: brokerUrl = “[host]:9092")
      */
     function kafkaNode(config) {
+
         RED.nodes.createNode(this, config);
 
         var node = this;
@@ -36,6 +37,7 @@ module.exports = function (RED) {
                 } else {
                     topic =  configtopic;
                 }
+
                 payloads = [{ topic: topic, partition: p,  messages: msg.payload }];
                 producer.send(payloads, function (err, data) {
                     if (err) {
@@ -54,7 +56,7 @@ module.exports = function (RED) {
         catch (e) {
             node.error(e);
         }
-        
+
         this.status({ fill: "green", shape: "dot", text: "connected to " + brokerUrl });
     }
 
